@@ -15,6 +15,9 @@ Se tiene que crear la base de datos en **phpmyadmin**, con el nombre modelo_rede
 
 Luego de ello, deberán abrir el proyecto en **Visual Studio Code**, y en la terminal ejecutar los siguientes comandos:
 
+**php artisan migrate --seed** => Este comando es para poblar la base de datos con valores por defecto.
+
+
 
 
 ## About Laravel
