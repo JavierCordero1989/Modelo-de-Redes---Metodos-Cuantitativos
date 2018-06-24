@@ -1,1 +1,1 @@
-# Modelo-de-Redes---Metodos-Cuantitativos
+# Modelo de Redes - Metodos Cuantitativos
