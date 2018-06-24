@@ -15,8 +15,8 @@ class CreateconexionesTable extends Migration
     {
         Schema::create('conexiones', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_from');
-            $table->integer('id_to');
+            $table->integer('id_from')->unsigned();
+            $table->integer('id_to')->unsigned();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('id_from')->references('id')->on('nodos');
@@ -31,6 +31,6 @@ class CreateconexionesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('conexiones');
+        Schema::dropIfExists('conexiones');
     }
 }
