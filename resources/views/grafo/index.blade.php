@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1 class="pull-left">Grafo</h1>
         <h1 class="pull-right">
-           <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px" href="#">Add New</a>
+           <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px" href="#">Guardar Cambios</a>
         </h1>
     </section>
 

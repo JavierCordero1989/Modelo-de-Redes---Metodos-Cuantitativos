@@ -1,4 +1,5 @@
 <script>
+    // Se obtienen los datos desde el controlador y se almacenan en variables de javascript
     var conexiones = <?php echo json_encode($conexiones); ?>;
     var ids_nodos = <?php echo json_encode($ids_nodos); ?>; //ID's obtenidos de la BD
     var nombres_nodos = <?php echo json_encode($nombres); ?>; //Nombres de los nodos obtenidos e la BD
@@ -19,7 +20,7 @@
             <div class="col-sm-12">
                 ID:<input v-model="id_nodo" class="form-control" readonly="readonly">
                 Nombre: <input v-model="nombre" class="form-control" placeholder="Ingrese el nombre">
-                <button @click="addNodes(id_nodo, nombre)" class="btn btn-success">Add Node</button>
+                <button @click="addNodes(id_nodo, nombre)" class="btn btn-success">Agregar Nodo</button>
             </div>
         </ul>
     </div>
@@ -27,9 +28,9 @@
     <div class="col-sm-12" style="padding: 25px 0px 25px 0px;">
         <ul>
             <div class="col-sm-12">
-                From:<input v-model="from" class="form-control" placeholder="Desde">
-                To:<input v-model="to" class="form-control" placeholder="Hasta">
-                <button @click="add(from, to)" class="btn btn-success">Add Egde</button>
+                Desde el nodo: <input v-model="from" class="form-control" placeholder="Desde">
+                Hasta el nodo: <input v-model="to" class="form-control" placeholder="Hasta">
+                <button @click="add(from, to)" class="btn btn-success">Agregar Arista</button>
             </div>
         </ul>
     </div>
