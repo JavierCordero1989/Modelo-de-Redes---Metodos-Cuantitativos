@@ -1,6 +1,5 @@
 <script>
     // Se obtienen los datos desde el controlador y se almacenan en variables de javascript
-    var conexiones = <?php echo json_encode($conexiones); ?>;
     var ids_nodos = <?php echo json_encode($ids_nodos); ?>; //ID's obtenidos de la BD
     var nombres_nodos = <?php echo json_encode($nombres); ?>; //Nombres de los nodos obtenidos e la BD
 
@@ -11,6 +10,7 @@
 <script src="{{ asset('js/vis.min.js') }}"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 <script src="{{ asset('js/vue.js') }}"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
@@ -102,7 +102,7 @@ var app = new Vue({
     'el': '#app',
     data(){
         return {
-            id_nodo: parseInt(nodes[nodes.length-1].id)+1,
+            id_nodo: nodes.length <= 0 ? 1 : parseInt(nodes[nodes.length-1].id)+1,
             nombre: '',
             from: '',
             to: '',
