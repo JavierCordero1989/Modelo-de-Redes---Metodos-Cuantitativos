@@ -23,8 +23,10 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="#" class="logo">
-            <b>Alliance Systems</b>
+        <a href="/home" class="logo">
+            <!-- <b>Alliance Systems</b> -->
+            <span class="logo-mini"><b>AS</b></span>
+            <span class="logo-lg"><b>Alliance Systems</b></span>
         </a>
 
         <!-- Header Navbar -->
