@@ -7,6 +7,16 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Como instalar el proyecto
+
+El proyecto debe ser clonado de la rama **master**, mediante el siguiente **https://github.com/JavierCordero1989/Modelo-de-Redes---Metodos-Cuantitativos.git**
+
+Se tiene que crear la base de datos en **phpmyadmin**, con el nombre modelo_redes_2018.
+
+Luego de ello, deberán abrir el proyecto en **Visual Studio Code**, y en la terminal ejecutar los siguientes comandos:
+
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
