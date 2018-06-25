@@ -35,7 +35,7 @@
             </div>
             <div class="box-footer">
                 <button @click="addNodes(id_nodo, nombre)" class="btn btn-success pull-left">Agregar Nodo</button>
-                <button class="btn btn-danger pull-right">Eliminar Nodo</button>
+                <button id="btn_eliminar_nodo" class="btn btn-danger pull-right hide">Eliminar Nodo</button>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="box-footer">
                 <button @click="addEdges(from, to)" class="btn btn-success pull-left">Agregar Arista</button>
-                <button class="btn btn-danger pull-right">Eliminar Arista</button>
+                <button id="btn_eliminar_arista" class="btn btn-danger pull-right hide">Eliminar Arista</button>
             </div>
         </div>
     </div>
@@ -121,8 +121,35 @@
 
     network = new vis.Network(container, data, options);
 
+    var id_nodo = null;
+    var id_arista = null;
+    // var index = array.indexOf(5);
+    //Evento de la red, para los nodos
     network.on( 'click', function(properties) {
-        console.log('clicked node ' + properties.nodes);
+        console.log('Nodo: ' + properties.nodes);
+        console.log('Arista: ' + properties.edges);
+        
+        id_arista = null;
+        id_nodo = null;
+
+        id_arista = properties.edges; //Guarda los ids de las aristas seleccionadas
+        id_nodo = properties.nodes; //Guarda los ids de los nodos seleccionados
+
+        if(properties.nodes == '') {
+            //Oculta el boton de borrar nodo
+            $('#btn_eliminar_nodo').removeClass("show");
+        }
+        else {
+            //Muestra el boton de borrar nodo
+            $('#btn_eliminar_nodo').addClass("show");
+        }
+
+        if(properties.edges == '') {
+            $('#btn_eliminar_arista').removeClass("show");
+        }
+        else {
+            $('#btn_eliminar_arista').addClass("show");
+        }
     });
 
     
