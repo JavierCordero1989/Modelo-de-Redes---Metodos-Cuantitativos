@@ -28,6 +28,6 @@ class CreatenodosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('nodos');
+        Schema::dropIfExists('nodos');
     }
 }

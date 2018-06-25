@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateconexionesTable extends Migration
+class CreateproyectosTable extends Migration
 {
 
     /**
@@ -13,14 +13,12 @@ class CreateconexionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('conexiones', function (Blueprint $table) {
+        Schema::create('proyectos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_from')->unsigned();
-            $table->integer('id_to')->unsigned();
+            $table->string('nombre_proyecto');
+            $table->text('descripcion');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('id_from')->references('id')->on('nodos');
-            $table->foreign('id_to')->references('id')->on('nodos');
         });
     }
 
@@ -31,6 +29,6 @@ class CreateconexionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conexiones');
+        Schema::dropIfExists('proyectos');
     }
 }
