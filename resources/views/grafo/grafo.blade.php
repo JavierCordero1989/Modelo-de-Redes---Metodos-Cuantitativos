@@ -121,16 +121,17 @@
 
     network = new vis.Network(container, data, options);
 
-    var id_nodo = null;
+    var id_nodo = null; //
     var id_arista = null;
+
     // var index = array.indexOf(5);
     //Evento de la red, para los nodos
     network.on( 'click', function(properties) {
         console.log('Nodo: ' + properties.nodes);
         console.log('Arista: ' + properties.edges);
         
-        id_arista = null;
-        id_nodo = null;
+        id_arista = null; //Reinicia la variable
+        id_nodo = null; //Reinicia la variable
 
         id_arista = properties.edges; //Guarda los ids de las aristas seleccionadas
         id_nodo = properties.nodes; //Guarda los ids de los nodos seleccionados
