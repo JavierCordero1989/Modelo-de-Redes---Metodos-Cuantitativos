@@ -29,11 +29,11 @@
             </div>
 
             <div class="box-body">
-                <div class="form-group">
+                <div class="col-md-6 form-group">
                     <label for="">ID:</label>
                     <input v-model="id_nodo" class="form-control" readonly="readonly" placeholder="Aqui el ID del nodo">
                 </div>
-                <div class="form-group">
+                <div class="col-md-6 form-group">
                     <label for="">Nombre:</label>
                     <input v-model="nombre" class="form-control" placeholder="Ingrese el nombre">
                 </div>
@@ -59,11 +59,11 @@
             </div>
 
             <div class="box-body">
-                <div class="form-group">
+                <div class="col-md-6 form-group">
                     <label for="">Desde el nodo: @{{nombreDelNodoDesde}}</label>
                     <input type="number" v-model="from" class="form-control" placeholder="Desde">
                 </div>
-                <div class="form-group">
+                <div class="col-md-6 form-group">
                     <label for="">Hasta el nodo: @{{nombreDelNodoHasta}}</label>
                     <input type="number" v-model="to" class="form-control" placeholder="Hasta">
                 </div>
@@ -78,8 +78,11 @@
 </div>
 <!-- Termina la caja que contiene los mantenimientos -->
 
-<!-- Grafico con nodos en imagen -->
-<div class="col-sm-10 col-md-offset-1" id="grafo_img" style="height: 400px; border: 1px solid black;"></div>
+<!-- <div class="col-md-12 box box-warning"> -->
+    <!-- Grafico con nodos en imagen -->
+    <div class="col-md-12 box box-warning" id="grafo_img" style="height: 400px"></div>
+    <!-- style="height: 400px; border: 1px solid black;" -->
+<!-- </div> -->
 
 <script>
 
