@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version June 23, 2018, 4:19 am UTC
  *
  * @property string nombre_nodo
+ * @property string url_imagen
+ * @property integer id_proyecto
  */
 class nodos extends Model
 {
@@ -23,7 +25,9 @@ class nodos extends Model
 
 
     public $fillable = [
-        'nombre_nodo'
+        'nombre_nodo',
+        'url_imagen',
+        'id_proyecto'
     ];
 
     /**
@@ -32,7 +36,9 @@ class nodos extends Model
      * @var array
      */
     protected $casts = [
-        'nombre_nodo' => 'string'
+        'nombre_nodo' => 'string',
+        'url_imagen' => 'string', //Se agrego este nuevo campo
+        'id_proyecto' => 'integer' //Se agrego este nuevo campo
     ];
 
     /**

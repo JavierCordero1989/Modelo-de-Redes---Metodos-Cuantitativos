@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property integer id_from
  * @property integer id_to
+ * @property integer peso_arista
  */
 class conexiones extends Model
 {
@@ -25,7 +26,8 @@ class conexiones extends Model
 
     public $fillable = [
         'id_from',
-        'id_to'
+        'id_to',
+        'peso_arista'
     ];
 
     /**
@@ -35,7 +37,8 @@ class conexiones extends Model
      */
     protected $casts = [
         'id_from' => 'integer',
-        'id_to' => 'integer'
+        'id_to' => 'integer',
+        'peso_arista' => 'integer'
     ];
 
     /**
