@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use DB;
 
 class conexionesController extends AppBaseController
 {
@@ -29,11 +30,28 @@ class conexionesController extends AppBaseController
      */
     public function index(Request $request)
     {
+        // select (select nombre_nodo from nodos where id=id_from) as Nodo_desde, (select nombre_nodo from nodos where id=id_to) as Nodo_hasta from conexiones
         $this->conexionesRepository->pushCriteria(new RequestCriteria($request));
         $conexiones = $this->conexionesRepository->all();
 
+        // select nombre_nodo from nodos as n
+        // join conexiones as c
+        // on c.id_from=n.id
+        // $nodos_desde = DB::table('nodos as n')
+        //     ->select('n.nombre_nodo as nombre')
+        //     ->join('conexiones as c', 'n.id', '=', 'c.id_from')
+        //     ->whereNull('c.deleted_at')
+        //     ->get();
+
+        // $nodos_hasta = DB::table('nodos as n')
+        //     ->select('n.nombre_nodo as nombre')
+        //     ->join('conexiones as c', 'n.id', '=', 'c.id_to')
+        //     ->whereNull('c.deleted_at')
+        //     ->get();
+
         return view('conexiones.index')
             ->with('conexiones', $conexiones);
+            // ->with('nodos', ['from'=>$nodos_desde, 'to'=>$nodos_hasta]);
     }
 
     /**
