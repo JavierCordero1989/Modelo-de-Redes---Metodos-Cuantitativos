@@ -17,6 +17,7 @@ class CreateconexionesTable extends Migration
             $table->increments('id');
             $table->integer('id_from')->unsigned();
             $table->integer('id_to')->unsigned();
+            $table->integer('peso_arista');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('id_from')->references('id')->on('nodos');
