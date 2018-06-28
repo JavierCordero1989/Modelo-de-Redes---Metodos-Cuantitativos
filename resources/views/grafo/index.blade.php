@@ -6,14 +6,13 @@
         <h1 class="pull-left">Grafo</h1>
         <h1 class="pull-right">
            <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{--{!! route('especies.create') !!}--}}#">Guardar Cambios</a>
-           <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px;margin-right:5px" href="/home">Volver</a>
         </h1>
-        {{--{!! Form::open(['route' => 'guardarGrafo','files' => true]) !!}--}}
+        <!-- {{--{!! Form::open(['route' => 'guardarGrafo','files' => true]) !!}--}}
 
         {{--{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}--}}
         {{--<a href="{!! route('especies.index') !!}" class="btn btn-default">Cancelar</a>--}}
 
-        {{--{!! Form::close() !!}--}}
+        {{--{!! Form::close() !!}--}} -->
     </section>
 
     <div class="content">
