@@ -3,7 +3,7 @@
 @section('content')
 
     <section class="content-header">
-        <h1 class="pull-left">Grafo</h1>
+        <h1 class="pull-left">Grafo - Id de usuario: {!! Auth::user()->id !!}</h1>
         <h1 class="pull-right">
            <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{--{!! route('especies.create') !!}--}}#">Guardar Cambios</a>
         </h1>
@@ -31,5 +31,5 @@
         </div>
     </div>
 
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>--}}
+    <!-- {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>--}} -->
 @endsection
