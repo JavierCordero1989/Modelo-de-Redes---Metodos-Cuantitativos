@@ -20,7 +20,9 @@ class nodosRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'nombre_nodo'
+        'nombre_nodo',
+        'url_imagen', //Se agrego este campo nuevo,
+        'id_proyecto' //Se agrego este campo nuevo
     ];
 
     /**
