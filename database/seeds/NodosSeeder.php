@@ -16,6 +16,8 @@ class NodosSeeder extends Seeder
             \DB::table('nodos')
             ->insert(array(
                 'nombre_nodo' => ('Nodo '.$i),
+                'url_imagen' => 'img/icono-edificios.png', //Se agregó este dato a el seed
+                'id_proyecto' => 1,
                 'created_at' => date('Y-m-d H:m:s'),
                 'updated_at' => date('Y-m-d H:m:s')
             ));
