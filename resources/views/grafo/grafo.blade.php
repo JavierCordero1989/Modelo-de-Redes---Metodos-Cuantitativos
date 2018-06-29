@@ -17,6 +17,8 @@
 <script src="{{ asset('js/vis.min.js') }}"></script>
 <script src="{{ asset('js/vue.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/rutaMasCorta.js') }}"></script>
+
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 <!-- Caja que contiene los campos para mantenimientos -->

@@ -25,7 +25,7 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="/home" class="logo">
+        <a href="{!! url('/home') !!}" class="logo">
             <!-- <b>Alliance Systems</b> -->
             <span class="logo-mini"><b>AS</b></span>
             <span class="logo-lg"><b>Alliance Systems</b></span>
@@ -93,7 +93,7 @@
 
     <!-- Main Footer -->
     <footer class="main-footer" style="max-height: 100px;text-align: center">
-        <strong>Copyright © 2018 <a href="http://infyom.com" target="_blank">Alliance Systems</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright © 2018 <a href="{!! url('/home') !!}">Alliance Systems</a>.</strong> Todos los derechos reservados.
     </footer>
 
 </div>
