@@ -3,7 +3,7 @@ var grafo = []; //Es para mantener la idea
 var rutaMasCorta;
 var longitudMasCorta;
 var listos = null;
-
+var limiteIteraciones = 500;
 
 //Construye el grafo con cada identificador
 function generarGrafo(serieDeNodos) {
@@ -88,8 +88,8 @@ function encontrarRutaMinimaDijkstra(inicio, fin) {
         pila.agregar(tmp);
         tmp = new Nodo(tmp.to, 0, 0);
 
-        if(variableControl >= 5000) {
-            console.log("Se detuvo el proceso, se llego a las 5000 iteraciones. while(87)");
+        if(variableControl >= limiteIteraciones) {
+            console.log("Se detuvo el proceso, se llego a las " + limiteIteraciones + " iteraciones. while(87)");
             break;
         }
         variableControl++;
@@ -103,8 +103,8 @@ function encontrarRutaMinimaDijkstra(inicio, fin) {
     while(!pila.isEmpty()) {
         ruta += (pila.quitar().from + " ");
 
-        if(variableControl >= 5000) {
-            console.log("Se detuvo el proceso, se llego a las 5000 iteraciones. while(103)");
+        if(variableControl >= limiteIteraciones) {
+            console.log("Se detuvo el proceso, se llego a las " + limiteIteraciones + " iteraciones. while(103)");
             break;
         }
         variableControl++;
@@ -151,16 +151,6 @@ function encontrarRutaMinima(inicio) {
                 continue;
             }
 
-            //Si ya esta en la cola de prioridad actualiza la distancia menor
-            // cola.cola.forEach(function(element) {
-            //     //Si la distancia es la cola es mayor que la distancia calculada
-            //     if(element.from == nod.from && element.peso > nod.peso) {
-            //         cola.remover(element.from); //remueve el nodo de la cola
-            //         cola.agregar(nod); //agrega el nodo con la nueva distancia
-            //         break; //no sigue avanzando
-            //     }
-            // }); 
-
             for(i=0; i<cola.cola.length; i++) {
                 if(cola.cola[i].from == nod.from && cola.cola[i].peso > nod.peso) {
                     cola.remover(cola.cola[i].from); //remueve el nodo de la cola
@@ -170,8 +160,8 @@ function encontrarRutaMinima(inicio) {
             }
         }
 
-        if(variableControl >= 5000) {
-            console.log("Se detuvo el proceso, se llego a las 5000 iteraciones. while(128)");
+        if(variableControl >= limiteIteraciones) {
+            console.log("Se detuvo el proceso, se llego a las " + limiteIteraciones + " iteraciones. while(128)");
             break;
         }
         variableControl++;
@@ -323,7 +313,7 @@ Pila.prototype.agregar = function(nodoNuevo) {
 
 Pila.prototype.quitar = function() {
     var nodo = this.pila.splice(this.pila.length-1, 1);
-    return nodo;
+    return nodo[0];
 }
 
 Pila.prototype.remover = function(id) {
@@ -367,7 +357,7 @@ Lista.prototype.agregar = function(nuevoNodo) {
 
 Lista.prototype.remover = function(id) {
     for(i=0; i<this.lista.length; i++) {
-        if(this,lista[0].from == id) {
+        if(this.lista[0].from == id) {
             this.lista.splice(i, 1);
         }
     }
