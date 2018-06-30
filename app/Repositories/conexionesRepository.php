@@ -21,7 +21,8 @@ class conexionesRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'id_from',
-        'id_to'
+        'id_to',
+        'peso_arista' //Se agrego este cambio
     ];
 
     /**

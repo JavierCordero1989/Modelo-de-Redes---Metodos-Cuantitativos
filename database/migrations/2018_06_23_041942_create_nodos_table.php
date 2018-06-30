@@ -16,8 +16,11 @@ class CreatenodosTable extends Migration
         Schema::create('nodos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre_nodo');
+            $table->string('url_imagen'); //Se metió esta variable nueva
+            $table->integer('id_proyecto')->unsigned(); //Se metió esta variable nueva
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('id_proyecto')->references('id')->on('proyectos'); //Se agregó una llave foranea
         });
     }
 
