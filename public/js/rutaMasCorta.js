@@ -7,32 +7,32 @@ var limiteIteraciones = 500;
 
 //Construye el grafo con cada identificador
 function generarGrafo(serieDeNodos) {
-    for(i=0; i<serieDeNodos.length; i++) {
+    for (i = 0; i < serieDeNodos.length; i++) {
         nodos.push(serieDeNodos[i]);
     }
-    for(j=0; j<serieDeNodos.length; j++) {
+    for (j = 0; j < serieDeNodos.length; j++) {
         grafo.push(arrayCeros(serieDeNodos));
     }
 
-    agregarRuta(1,2,3);
-    agregarRuta(1,5,6);
-    agregarRuta(1,6,10);
-    agregarRuta(2,3,5);
-    agregarRuta(2,5,2);
-    agregarRuta(3,4,8);
-    agregarRuta(3,5,9);
-    agregarRuta(3,6,7);
-    agregarRuta(4,5,4);
-    agregarRuta(5,6,4);
+    agregarRuta(1, 2, 3);
+    agregarRuta(1, 5, 6);
+    agregarRuta(1, 6, 10);
+    agregarRuta(2, 3, 5);
+    agregarRuta(2, 5, 2);
+    agregarRuta(3, 4, 8);
+    agregarRuta(3, 5, 9);
+    agregarRuta(3, 6, 7);
+    agregarRuta(4, 5, 4);
+    agregarRuta(5, 6, 4);
 
-    console.log(encontrarRutaMinimaDijkstra(1,4));
+    console.log(encontrarRutaMinimaDijkstra(1, 4));
 }
 
 //Genera una fila para la matriz vacia
 function arrayCeros(serieDeNodos) {
     var array = [];
 
-    for(i=0; i<serieDeNodos.length; i++) {
+    for (i = 0; i < serieDeNodos.length; i++) {
         array.push(0);
     }
 
@@ -50,7 +50,7 @@ function agregarRuta(origen, destino, distancia) {
 function posicionNodo(nodo) {
     for (i = 0; i < nodos.length; i++) {
         // console.log(nodos[i] + ":" + nodo);
-        if(nodos[i] == nodo) {
+        if (nodos[i] == nodo) {
             return i;
         }
     }
@@ -69,7 +69,7 @@ function encontrarRutaMinimaDijkstra(inicio, fin) {
     //recupera el nodo final de la lista de terminados
     var tmp = new Nodo(fin, 0, 0);
 
-    if(!listos.contains(tmp)) {
+    if (!listos.contains(tmp)) {
         alert("Error, nodo no alcanzable");
         return "Bye";
     }
@@ -84,11 +84,11 @@ function encontrarRutaMinimaDijkstra(inicio, fin) {
 
     var variableControl = 0;
 
-    while(tmp != undefined) {
+    while (tmp != undefined) {
         pila.agregar(tmp);
         tmp = new Nodo(tmp.to, 0, 0);
 
-        if(variableControl >= limiteIteraciones) {
+        if (variableControl >= limiteIteraciones) {
             console.log("Se detuvo el proceso, se llego a las " + limiteIteraciones + " iteraciones. while(87)");
             break;
         }
@@ -100,10 +100,10 @@ function encontrarRutaMinimaDijkstra(inicio, fin) {
     variableControl = 0;
 
     //recorre la pila para armar la ruta en el orden correcto
-    while(!pila.isEmpty()) {
+    while (!pila.isEmpty()) {
         ruta += (pila.quitar().from + " ");
 
-        if(variableControl >= limiteIteraciones) {
+        if (variableControl >= limiteIteraciones) {
             console.log("Se detuvo el proceso, se llego a las " + limiteIteraciones + " iteraciones. while(103)");
             break;
         }
@@ -121,38 +121,46 @@ function encontrarRutaMinima(inicio) {
 
     cola.agregar(ni); //agrega el nodo inicial a la cola de prioridad
 
-    console.log(cola.imprimirValores());
+    // console.log("Imprimiendo los valores de la cola despues de agregar el nodo primero");
+    // console.log(cola.imprimirValores());
 
     var variableControl = 0;
 
-    while(!cola.isEmpty()) {
+    while (!cola.isEmpty()) {
+        // console.log(cola.isEmpty());
         var tmp = cola.quitar(); //saca el primer elemento
-        console.log("Nodo quitado de la cola: ");
-        console.log(tmp);
+        // console.log("Nodo quitado de la cola: ");
+        // console.log(tmp);
         listos.agregar(tmp); //lo manda a la lista de terminados
 
-        var p = posicionNodo(tmp.from); 
+        // console.log("tmp");
+        // console.log(tmp);
+        var p = posicionNodo(tmp.from);
 
-        // console.log("Aqui se cae, valor de p: " + p);
+        console.log("Aqui se cae, valor de p: " + p);
 
-        for(j=0; j<grafo[p].length; j++) {
-            if(grafo[p][j] == 0) { //Si no hay conexion no lo evalua
+        // console.log("grafo.length");
+        // console.log(grafo[p].length);
+        for (j = 0; j < grafo[p].length; j++) {
+            if (grafo[p][j] == 0) { //Si no hay conexion no lo evalua
                 continue;
             }
-            if(estaTerminado(j)) { //Si ya fue agregado a la lista de teminados
+            if (estaTerminado(j)) { //Si ya fue agregado a la lista de teminados
                 continue;
             }
 
-            var nod = new Nodo(nodos[j], tmp.to, tmp.peso+grafo[p][j]);
+            var nod = new Nodo(nodos[j], tmp.to, tmp.peso + grafo[p][j]);
 
+            console.log("Nodo agregado en la linea 152");
+            console.log(nod);
             //Si no esta en la cola de prioridad lo agrega
-            if(!cola.contains(nod)) {
+            if (!cola.contains(nod)) {
                 cola.agregar(nod);
                 continue;
             }
 
-            for(i=0; i<cola.cola.length; i++) {
-                if(cola.cola[i].from == nod.from && cola.cola[i].peso > nod.peso) {
+            for (i = 0; i < cola.cola.length; i++) {
+                if (cola.cola[i].from == nod.from && cola.cola[i].peso > nod.peso) {
                     cola.remover(cola.cola[i].from); //remueve el nodo de la cola
                     cola.agregar(nod); //agrega el nodo con la nueva distancia
                     break; //no sigue avanzando
@@ -160,7 +168,7 @@ function encontrarRutaMinima(inicio) {
             }
         }
 
-        if(variableControl >= limiteIteraciones) {
+        if (variableControl >= limiteIteraciones) {
             console.log("Se detuvo el proceso, se llego a las " + limiteIteraciones + " iteraciones. while(128)");
             break;
         }
@@ -184,9 +192,9 @@ function Nodo(from, to, peso) {
 // }
 
 Nodo.prototype.verDatos = function() {
-    alert(this.from + " - " + this.to + " - " + this.peso);
-}
-//Fin del objeto Nodo
+        alert(this.from + " - " + this.to + " - " + this.peso);
+    }
+    //Fin del objeto Nodo
 
 
 
@@ -207,32 +215,32 @@ function Cola() {
 }
 
 Cola.prototype.agregar = function(nodoNuevo) {
-    this.cola.push(nodoNuevo);
-    return "AGREGADO CON EXITO";
-}
-// function agregar(nodoNuevo) {
-//     this.cola.push(nodoNuevo);
-//     return "AGREGADO CON EXITO";
-// }
+        this.cola.push(nodoNuevo);
+        return "AGREGADO CON EXITO";
+    }
+    // function agregar(nodoNuevo) {
+    //     this.cola.push(nodoNuevo);
+    //     return "AGREGADO CON EXITO";
+    // }
 
 // Quita el primer elemento de la cola
 Cola.prototype.quitar = function() {
-    var nodo = this.cola.splice(0,1);
-    
-    return nodo[0];
-}
-// function quitar() {
-//     console.log("Tamaño de la cola: " + this.cola.length);
-//     var nodo = this.cola.splice(0,1);
-//     console.log(nodo);
-//     console.log(nodo[0].from + ":" + nodo[0].to + ":" + nodo[0].peso);
-//     return nodo[0];
-// }
+        var nodo = this.cola.splice(0, 1);
+
+        return nodo[0];
+    }
+    // function quitar() {
+    //     console.log("Tamaño de la cola: " + this.cola.length);
+    //     var nodo = this.cola.splice(0,1);
+    //     console.log(nodo);
+    //     console.log(nodo[0].from + ":" + nodo[0].to + ":" + nodo[0].peso);
+    //     return nodo[0];
+    // }
 
 // Elimina un elemento por su ID
 Cola.prototype.remover = function(id) {
-    for(i=0; i<this.cola.length; i++) {
-        if(this.cola[i].from == id) {
+    for (i = 0; i < this.cola.length; i++) {
+        if (this.cola[i].from == id) {
             this.cola.splice(i, 1);
         }
     }
@@ -247,6 +255,8 @@ Cola.prototype.remover = function(id) {
 // }
 
 Cola.prototype.isEmpty = function() {
+    // console.log("cola.isEmpty()");
+    // console.log(this.cola.length);
     return this.cola.length <= 0;
 }
 
@@ -255,8 +265,8 @@ Cola.prototype.isEmpty = function() {
 // }
 
 Cola.prototype.contains = function(nodo) {
-    for(i=0; i<this.cola.length; i++) {
-        if(nodo.from == this.cola[i].from) {
+    for (i = 0; i < this.cola.length; i++) {
+        if (nodo.from == this.cola[i].from) {
             return true;
         }
     }
@@ -275,16 +285,16 @@ Cola.prototype.contains = function(nodo) {
 // }
 
 Cola.prototype.imprimirValores = function() {
-    var valores = "";
+        var valores = "";
 
-    for(i=0; i<this.cola.length; i++) {
-        valores += this.cola[i].from + " - ";
+        for (i = 0; i < this.cola.length; i++) {
+            valores += this.cola[i].from + " - ";
+        }
+
+        return valores;
     }
-
-    return valores;
-}
-// function imprimirValores() {
-//     var valores = "";
+    // function imprimirValores() {
+    //     var valores = "";
 
 //     for(i=0; i<this.cola.length; i++) {
 //         valores += this.cola[i].from + " - ";
@@ -312,21 +322,21 @@ Pila.prototype.agregar = function(nodoNuevo) {
 }
 
 Pila.prototype.quitar = function() {
-    var nodo = this.pila.splice(this.pila.length-1, 1);
+    var nodo = this.pila.splice(this.pila.length - 1, 1);
     return nodo[0];
 }
 
 Pila.prototype.remover = function(id) {
-    for(i=0; i<this.pila.length; i++) {
-        if(this.pila[i].from == id) {
+    for (i = 0; i < this.pila.length; i++) {
+        if (this.pila[i].from == id) {
             this.pila.splice(i, 1);
         }
     }
 }
 
 Pila.prototype.contains = function(nodo) {
-    for(i=0; i<this.pila.length; i++) {
-        if(nodo.from == this.pila[i].from) {
+    for (i = 0; i < this.pila.length; i++) {
+        if (nodo.from == this.pila[i].from) {
             return true;
         }
     }
@@ -335,9 +345,9 @@ Pila.prototype.contains = function(nodo) {
 }
 
 Pila.prototype.isEmpty = function() {
-    return this.pila.length <= 0;
-}
-//Fin del objeto pila
+        return this.pila.length <= 0;
+    }
+    //Fin del objeto pila
 
 
 
@@ -351,13 +361,15 @@ function Lista() {
 }
 
 Lista.prototype.agregar = function(nuevoNodo) {
+    // console.log("Nodo a agregar a la lista de listos");
+    // console.log(nuevoNodo);
     this.lista.push(nuevoNodo);
     return "AGREGADO CON EXITO"
 }
 
 Lista.prototype.remover = function(id) {
-    for(i=0; i<this.lista.length; i++) {
-        if(this.lista[0].from == id) {
+    for (i = 0; i < this.lista.length; i++) {
+        if (this.lista[0].from == id) {
             this.lista.splice(i, 1);
         }
     }
@@ -368,8 +380,8 @@ Lista.prototype.isEmpty = function() {
 }
 
 Lista.prototype.contains = function(nodo) {
-    for(i=0; i<this.lista.length; i++) {
-        if(nodo.from == this.lista[i].from) {
+    for (i = 0; i < this.lista.length; i++) {
+        if (nodo.from == this.lista[i].from) {
             return true;
         }
     }
@@ -384,8 +396,8 @@ Lista.prototype.get = function(indice) {
 }
 
 Lista.prototype.indexOf = function(nodo) {
-    for(i=0; i<this.lista.length; i++) {
-        if(this.lista[i].from == nodo.from) {
+    for (i = 0; i < this.lista.length; i++) {
+        if (this.lista[i].from == nodo.from) {
             return i;
         }
     }
