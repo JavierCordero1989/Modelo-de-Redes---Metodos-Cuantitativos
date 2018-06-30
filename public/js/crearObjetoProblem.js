@@ -3,15 +3,7 @@ var conexiones = []; //Conexiones entre nodos y pesos, extraidos de la BD
 var listaObjetosConexion = [];
 var problem = {};
 
-function agregarNodo(nodo) {
-    problem[[nodo.from]] = {};
-}
 
-function agregarConexion(from, to, peso) {
-    problem[[from]] = {
-        [to]: peso
-    };
-}
 //from, to, peso
 
 // problem = {

@@ -25,6 +25,6 @@ Route::resource('nodos', 'nodosController');
 Route::resource('conexiones', 'conexionesController');
 
 Route::get('/grafo', 'grafoController@index');
-Route::get('/guardarGrafo', 'grafoController@guardarCambios');
+Route::get('/guardar', 'grafoController@save');
 
 Route::resource('proyectos', 'proyectosController');

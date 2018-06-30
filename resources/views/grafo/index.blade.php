@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1 class="pull-left">Grafo - Id de usuario: {!! Auth::user()->id !!}</h1>
         <h1 class="pull-right">
-           <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{--{!! route('especies.create') !!}--}}#">Calcular ruta mas corta</a>
+           <a class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px" @click="decirHola()">Calcular ruta mas corta</a>
         </h1>
         <!-- {{--{!! Form::open(['route' => 'guardarGrafo','files' => true]) !!}--}}
 

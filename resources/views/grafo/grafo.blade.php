@@ -4,7 +4,7 @@
     
     var nodos_json = <?php echo $nodos; ?>;
     var conexiones_json = <?php echo $conexionesNodos; ?>;
-
+    var conexionesNuevas_json = <?php echo $conexionesNuevas_json?>;
     // Se obtienen los datos desde el controlador y se almacenan en variables de javascript
     // var ids_nodos = <?php //echo json_encode($ids_nodos); ?>; //ID's obtenidos de la BD
     // var nombres_nodos = <?php //echo json_encode($nombres); ?>; //Nombres de los nodos obtenidos e la BD
@@ -21,7 +21,7 @@
 {{--<script src="{{ asset('js/Stack.js') }}"></script>--}}
 {{--<script src="{{ asset('js/Queue.js') }}"></script>--}}
 <script src="{{ asset('js/dijkstra.js') }}"></script>
-<script src="{{ asset('js/crearObjetoProblem.js') }}"></script>
+{{--<script src="{{ asset('js/crearObjetoProblem.js') }}"></script>--}}
 
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
@@ -86,6 +86,12 @@
         </div>
     </div>
     <!-- Termina la caja derecha -->
+
+    <div class="box box-primary col-md-12">
+        <button @click="rutaMasCorta()" class="btn btn-success pull-left" style="margin: 15px auto;">
+            Mostrar ruta mas corta
+        </button>
+    </div>
 </div>
 <!-- Termina la caja que contiene los mantenimientos -->
 
@@ -124,47 +130,12 @@
         network = new vis.Network(container, data, options);
     }
 
-    //Arreglo vacio para los cambios.
-    // var id_nodos_nuevos = [];
-    // var nombre_nodos_nuevos = [];
-    // var id_from_nuevo = [];
-    // var id_to_nuevo = [];
-
-    //Imagen para lso nodos
+    //Imagen para los nodos
     // var imagen = "{{ asset('img/icono-edificios.png') }}";
 
     nodes = nodos_json;
 
-    // nodes = []; //nodos para agregar a la red
-
-    // //Se agregan los nodos de la BD a la red
-    // for (index = 0; index < ids_nodos.length; index++) {
-    //     nodes.push
-    //     (
-    //         {
-    //             id:ids_nodos[index], 
-    //             shape:'circularImage', 
-    //             image:imagen, 
-    //             label:(ids_nodos[index] + ":" + nombres_nodos[index])
-    //         }
-    //     );
-    // }
-
     edges = conexiones_json;
-
-    //Aristas de la red, conexiones entre nodos
-    // edges = [];
-
-    // //Se agregan las conexiones de la BD a la red
-    // for (index = 0; index < _from.length; index++) {
-    //     edges.push
-    //     (
-    //         {
-    //             from:_from[index], 
-    //             to:_to[index]
-    //         }
-    //     );
-    // }
 
     // create a network
     var container = document.getElementById('grafo_img');
@@ -186,63 +157,8 @@
         edges: {
             width: 3, //Grosor de la linea del nodo
             color: 'lightgray'
-        },
-        // physics:{
-        //     enabled: true,
-        //     barnesHut: {
-        //         gravitationalConstant: -5000,
-        //         centralGravity: 0.3,
-        //         springLength: 95,
-        //         springConstant: 0.04,
-        //         damping: 0.09,
-        //         avoidOverlap: 0
-        //     },
-        //     forceAtlas2Based: {
-        //         gravitationalConstant: -50,
-        //         centralGravity: 0.01,
-        //         springConstant: 0.08,
-        //         springLength: 100,
-        //         damping: 0.4,
-        //         avoidOverlap: 0
-        //     },
-        //     repulsion: {
-        //         centralGravity: 0.2,
-        //         springLength: 200,
-        //         springConstant: 0.05,
-        //         nodeDistance: 100,
-        //         damping: 0.09
-        //     },
-        //     hierarchicalRepulsion: {
-        //         centralGravity: 0.0,
-        //         springLength: 100,
-        //         springConstant: 0.01,
-        //         nodeDistance: 120,
-        //         damping: 0.09
-        //     },
-        //     maxVelocity: 50,
-        //     minVelocity: 0.1,
-        //     solver: 'barnesHut',
-        //     stabilization: {
-        //         enabled: true,
-        //         iterations: 1000,
-        //         updateInterval: 100,
-        //         onlyDynamicEdges: false,
-        //         fit: true
-        //     },
-        //     timestep: 0.5,
-        //     adaptiveTimestep: true
-        // }
+        }
     };
-        // manipulation: {
-        //     enabled: false,
-        //     initiallyActive: false,
-        //     addNode: true,
-        //     addEdge: true,
-        //     editNode: undefined,
-        //     editEdge: true,
-        //     deleteNode: true,
-        //     deleteEdge: true
-        // }
 
 
     // network = new vis.Network(container, data, options);
@@ -334,13 +250,6 @@ var app = new Vue({
                 // nodes.add({id:id, shape: 'circularImage', image: 'img/icono-edificios.png', label:(id+":"+nombre)});
                 this.nodes.push({id:id, shape: 'circularImage', image: 'img/icono-edificios.png', label:(id+":"+nombre), color: colorNode})
 
-                // ids_nodos.push(id) //Agrega el id del nuevo nodo a los id ya guardados
-                // nombres_nodos.push(nombre) //Agrega el nombre del nuevo nodo a los ya guardados
-
-                // id_nodos_nuevos.push(id) //Agrega el nuevo ID al arreglo para mantener los nuevos cambios
-                // nombre_nodos_nuevos.push(nombre) // Agrega el nuevo nombre al arreglo para mantener los nuevos cambios
-
-                // network.setData({nodes: this.nodes, edges: this.edges}) //Actualiza el grafo
                 dibujarGrafo();
 
                 this.id_nodo = nodes.length <= 0 ? 1 : parseInt(nodes[nodes.length-1].id)+1 //Actualiza el ID siguiente
@@ -388,6 +297,30 @@ var app = new Vue({
                 }
                 
                 edges.splice(findIndex, 1);
+            }
+
+            dibujarGrafo();
+        },
+        rutaMasCorta() {
+            var resultadoAlgoritmo = dijkstra(problem, "1", "6");
+            console.log(resultadoAlgoritmo);
+
+            var tamanioResultado = resultadoAlgoritmo.path.length;
+
+            for(i=0; i<tamanioResultado; i++) {
+                for(j=0;j<nodes.length;j++) {
+                    if(resultadoAlgoritmo.path[i] == nodes[j].id) {
+                        nodes[j].color={background:'red'};
+                    }
+                }
+            }
+
+            for(i=0; i<tamanioResultado-1; i++) {
+                for(j=0;j<edges.length;j++) {
+                    if(resultadoAlgoritmo.path[i] == edges[j].from && resultadoAlgoritmo.path[i+1] == edges[j].to) {
+                        edges[j].color = {color:'red',highlight:'red'};
+                    }
+                }
             }
 
             dibujarGrafo();
