@@ -31,5 +31,5 @@
         </div>
     </div>
 
-    <!-- {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>--}} -->
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script> --}}
 @endsection

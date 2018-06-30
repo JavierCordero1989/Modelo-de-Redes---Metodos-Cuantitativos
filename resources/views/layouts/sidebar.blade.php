@@ -9,7 +9,7 @@
             <!-- http://infyom.com/images/logo/blue_logo_150x150.jpg -->
             <!-- https://liquipedia.net/commons/images/thumb/2/20/Alliance2016.png/600px-Alliance2016.png -->
             
-                <img src="https://mthightech.org/wp-content/uploads/2014/05/cropped-cropped-MHTBA-Triangle-Alliance-1.0.fw_-150x150.png" class="img-circle"
+                <img src="{{ asset('img/logo.png') }}" class="img-circle"
                      alt="User Image"/>
             </div>
             <div class="pull-left info">
