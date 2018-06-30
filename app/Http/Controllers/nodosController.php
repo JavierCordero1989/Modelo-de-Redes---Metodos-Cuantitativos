@@ -56,10 +56,12 @@ class nodosController extends AppBaseController
     public function store(CreatenodosRequest $request)
     {
         $input = $request->all();
+        $input['url_imagen'] = "img/icono-edificios.png";
+        $input['id_proyecto'] = 1;
 
         $nodos = $this->nodosRepository->create($input);
 
-        Flash::success('Nodos saved successfully.');
+        Flash::success('El nodo se ha guardado correctamente.');
 
         return redirect(route('nodos.index'));
     }
@@ -76,7 +78,7 @@ class nodosController extends AppBaseController
         $nodos = $this->nodosRepository->findWithoutFail($id);
 
         if (empty($nodos)) {
-            Flash::error('Nodos not found');
+            Flash::error('Nodo no encontrado');
 
             return redirect(route('nodos.index'));
         }
@@ -96,7 +98,7 @@ class nodosController extends AppBaseController
         $nodos = $this->nodosRepository->findWithoutFail($id);
 
         if (empty($nodos)) {
-            Flash::error('Nodos not found');
+            Flash::error('Nodo no encontrado');
 
             return redirect(route('nodos.index'));
         }
@@ -117,14 +119,14 @@ class nodosController extends AppBaseController
         $nodos = $this->nodosRepository->findWithoutFail($id);
 
         if (empty($nodos)) {
-            Flash::error('Nodos not found');
+            Flash::error('Nodo no encontrado');
 
             return redirect(route('nodos.index'));
         }
 
         $nodos = $this->nodosRepository->update($request->all(), $id);
 
-        Flash::success('Nodos updated successfully.');
+        Flash::success('El nodo se ha actualizado correctamente.');
 
         return redirect(route('nodos.index'));
     }
@@ -141,14 +143,14 @@ class nodosController extends AppBaseController
         $nodos = $this->nodosRepository->findWithoutFail($id);
 
         if (empty($nodos)) {
-            Flash::error('Nodos not found');
+            Flash::error('Nodo no encontrado');
 
             return redirect(route('nodos.index'));
         }
 
         $this->nodosRepository->delete($id);
 
-        Flash::success('Nodos deleted successfully.');
+        Flash::success('Nodo eliminado correctamente.');
 
         return redirect(route('nodos.index'));
     }

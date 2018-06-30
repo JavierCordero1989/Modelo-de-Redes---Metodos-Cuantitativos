@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
   return redirect('home');
@@ -26,5 +27,10 @@ Route::resource('conexiones', 'conexionesController');
 
 Route::get('/grafo', 'grafoController@index');
 Route::get('/guardar', 'grafoController@save');
+
+Route::post('nodo_nuevo',function(Request $request){   
+  $nodo = App\Producto\nodos::create($request->input());
+  return response()->json($nodo);
+});
 
 Route::resource('proyectos', 'proyectosController');

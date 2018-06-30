@@ -12,6 +12,7 @@
     //Relaciones desde y hasta de los nodos para realizar las conexiones
     // var _from = <?php //echo json_encode($conexiones['ids_from']); ?>;
     // var _to = <?php //echo json_encode($conexiones['ids_to']); ?>;
+
 </script>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/vis.min.js') }}"></script>
@@ -78,9 +79,13 @@
                     <label for="">Hasta el nodo: @{{nombreDelNodoHasta}}</label>
                     <input type="number" v-model="to" class="form-control" placeholder="Hasta">
                 </div>
+                <div class="col-md-6 form-group">
+                    <label for="">Peso de la arista: @{{pesoArista}}</label>
+                    <input type="number" v-model="pesoArista" class="form-control" placeholder="Peso">
+                </div>
             </div>
             <div class="box-footer">
-                <button @click="addEdges(from, to)" class="btn btn-success pull-left">Agregar Arista</button>
+                <button @click="addEdges(from, to, pesoArista)" class="btn btn-success pull-left">Agregar Arista</button>
                 <button id="btn_eliminar_arista" @click="removeSelectedEdge()" class="btn btn-danger pull-right hide">Eliminar Arista</button>
             </div>
         </div>
@@ -88,15 +93,31 @@
     <!-- Termina la caja derecha -->
 
     <div class="box box-primary col-md-12">
-        <button @click="rutaMasCorta()" class="btn btn-success pull-left" style="margin: 15px auto;">
-            Mostrar ruta mas corta
-        </button>
+        <div class="form-group col-sm-2">
+            <label for="nodo_inicio">Inicio: @{{nombreNodoInicio}} </label>
+            {{--{!! Form::label('nodo_inicio', 'Inicio:') !!}--}}
+            <select class="form-control" @change="nombre_nodo_inicio(nodoDeInicio)" v-model="nodoDeInicio" name="nodo_inicio" id="nodo_inicio"></select>
+            {{--{!! Form::select('nodo_inicio', ['1'=>'A', '2'=>'B'], null, ['class' => 'form-control', 'v-model'=>'nodoDeInicio']) !!}--}}
+        </div>
+        <div class="form-group col-sm-2">
+            <label for="nodo_fin">Llegada: @{{nombreNodoLlegada}} </label>
+            {{--{!! Form::label('nodo_fin', 'Llegada:') !!}--}}
+            <select class="form-control" @change="nombre_nodo_fin(nodoDeLlegada)" v-model="nodoDeLlegada" name="nodo_fin" id="nodo_fin"></select>
+            {{--{!! Form::select('nodo_fin', ['1'=>'A', '2'=>'B'], null, ['class' => 'form-control', 'v-model'=>'nodoDeLlegada']) !!}--}}
+        </div>
+        <div class="form-group col-sm-4">
+            <button class="btn btn-primary" style="margin: 15px auto;" @click="rutaMasCorta(nodoDeInicio,nodoDeLlegada)" >Mostrar ruta mas corta</button>
+            {{--{!! Form::button('Mostrar ruta mas corta', ['class' => 'btn btn-primary pull-left', 'style' => 'margin: 15px auto;', '@click' => 'rutaMasCorta(nodoDeInicio,nodoDeLlegada)' ]) !!}--}}
+        </div>
+        <div class="form-group col-sm-4">
+            <label id="label_ruta" class="hide">El tamaño de la ruta mínima es @{{rutaMinima}}</label>    
+        </div>
     </div>
 </div>
 <!-- Termina la caja que contiene los mantenimientos -->
 
     <div class="network">
-        <div class="vis-network col-md-12 box box-warning" id="grafo_img" style="height: 400px"></div>
+        <div class="vis-network col-md-12 box box-warning" id="grafo_img" style="height: 600px"></div>
     </div>
 
 <script>
@@ -130,6 +151,48 @@
         network = new vis.Network(container, data, options);
     }
 
+    function llenarSelect() {
+        var tamanioNodos = nodes.length;
+        var arrayNodos = [];
+
+        var selectInicio = document.getElementById("nodo_inicio");
+        var selectLlegada = document.getElementById("nodo_fin");
+
+        var control = 0;
+        var limite = 100;
+
+        selectInicio.length=0;
+        selectLlegada.length=0;
+
+        while (selectInicio.length > 0) {
+            selectInicio.remove(1);
+            if(control>=limite) {
+                console.log("Se rompio el while");
+                break;
+            }
+            control++;
+        }
+        
+        control = 0;
+        while (selectLlegada.length > 0) {
+            selectLlegada.remove(1);
+            if(control>=limite) {
+                console.log("Se rompio el while");
+                break;
+            }
+            control++;
+        }
+
+        for(i=0; i<tamanioNodos; i++) {
+            arrayNodos.push(nodes[i].id);
+            var option1 = document.createElement("option");
+            var option2 = document.createElement("option");
+            option1.innerHTML = arrayNodos[i];
+            option2.innerHTML = arrayNodos[i];
+            selectInicio.appendChild(option1);
+            selectLlegada.appendChild(option2);
+        }
+    }
     //Imagen para los nodos
     // var imagen = "{{ asset('img/icono-edificios.png') }}";
 
@@ -218,58 +281,49 @@ var app = new Vue({
             nodes: nodes,
             // nombresNodos: nombres_nodos,
             nombreDelNodoDesde: '',
-            nombreDelNodoHasta: ''
+            nombreDelNodoHasta: '',
+            pesoArista: '',
+            nodoDeInicio: '',
+            nodoDeLlegada: '',
+            nombreNodoInicio: '',
+            nombreNodoLlegada: '',
+            rutaMinima: ''
         }
     },
     methods: {
-        addEdges(from, to){
-            if(from == '' || to == '') {
+        addEdges(from, to, pesoArista){
+            if(from == '' || to == '' || pesoArista == '') {
                 console.log('No agrega ninguna arista porque esta el FROM o el TO estan en blanco...');
+                alert("Los campos \"Desde\",\"Hasta\" y \"Peso\" deben estar llenos");
             }
             else {
                 // edges.add({from:this.from, to:this.to, label: '8'});
-                this.edges.push({from:this.from, to:this.to, label: '8', arrows: 'to', color: colorEdge}) //Agrega la conexion entre dos nodos
+                this.edges.push({from:this.from, to:this.to, label: this.pesoArista, arrows: 'to'/*, color: colorEdge*/}) //Agrega la conexion entre dos nodos
 
-                // _from.push(parseInt(from)) //Agrega el nuevo ID desde al arreglo
-                // id_from_nuevo.push(parseInt(from)) //Agrega el nuevo ID desde al arreglo para conservar los cambios
-                // _to.push(parseInt(to)) //Agrega el nuevo ID hasta al arreglo
-                // id_to_nuevo.push(parseInt(to)) //Agrega el nuevo ID hasta al arreglo para conservar los cambios
-
-                // network.setData({nodes: this.nodes, edges: this.edges}) //Actualiza el grafo
                 dibujarGrafo();
                 // network.redraw();
                 this.from = '' //Vacia el campo para la arista desde
                 this.to = '' //Vacia el campo para la arista hasta
+                this.pesoArista = ''
             }
         },
         addNodes(id, nombre){
             if( nombre == '') {
                 console.log('No agrega el nodo, ya que el nombre esta vacio...');
+                alert("El campo para el \"Nombre\" deben estar llenos");
             }
             else {
                 // nodes.add({id:id, shape: 'circularImage', image: 'img/icono-edificios.png', label:(id+":"+nombre)});
-                this.nodes.push({id:id, shape: 'circularImage', image: 'img/icono-edificios.png', label:(id+":"+nombre), color: colorNode})
+                this.nodes.push({id:id, shape: 'circularImage', image: 'img/icono-edificios.png', label:(id+":"+nombre)/*, color: colorNode*/})
 
                 dibujarGrafo();
-
+                llenarSelect();
                 this.id_nodo = nodes.length <= 0 ? 1 : parseInt(nodes[nodes.length-1].id)+1 //Actualiza el ID siguiente
                 this.nombre = '' //Pone en blanco el campo del nombre del nodo
             }
         },
         removeSelectedNode() {
             var findIndex = 0;
-
-            //Elimina todas las aristas conectadas al nodo del arreglo edges
-            for(i=0; i<id_arista.length; i++) {
-                for(j=0; j<edges.length; j++) {
-                    if(edges[j].id == id_arista[i]) {
-                        findIndex = j;
-                        break;
-                    }
-                }
-                
-                edges.splice(findIndex, 1);
-            }
 
             for(i=0; i<id_nodo.length; i++) {
                 for(j=0; j<nodes.length; j++) {
@@ -280,6 +334,24 @@ var app = new Vue({
                 }
                 nodes.splice(findIndex, 1);
             }
+
+            console.log("Viejas aristas: ");
+            console.log(edges);
+
+            console.log(edges.indexOf(edges[0]));
+            for(i=0; i<id_arista.length; i++) {
+                for(j=0; j<edges.length; j++) {
+                    if(edges[j].id == id_arista[i]){
+                        findIndex = edges.indexOf(edges[j]);
+                        break;
+                    }
+                }
+                edges.splice(findIndex, 1);
+            }
+
+            console.log("Nuevas aristas: ");
+            console.log(edges);
+
             // network.setData({nodes: this.nodes, edges: this.edges}) //Actualiza el grafo
             dibujarGrafo();
             this.id_nodo = nodes.length <= 0 ? 1 : parseInt(nodes[nodes.length-1].id)+1
@@ -301,29 +373,78 @@ var app = new Vue({
 
             dibujarGrafo();
         },
-        rutaMasCorta() {
-            var resultadoAlgoritmo = dijkstra(problem, "1", "6");
-            console.log(resultadoAlgoritmo);
+        rutaMasCorta(nodoDeInicio,nodoDeLlegada) {
+            if(nodoDeInicio == '' || nodoDeLlegada == '') {
+                alert('Debe seleccionar los nodos de inicio y de llegada');
+                return;
+            }
+            else
+            {
+                console.log(nodoDeInicio + ":" + nodoDeLlegada);
 
-            var tamanioResultado = resultadoAlgoritmo.path.length;
+                //Pintar de negro todos los nodos antes de corrrer el algoritmo
+                edges.forEach(function(element) {
+                    element.color = {color:'black', highlight: 'black'};
+                });
 
-            for(i=0; i<tamanioResultado; i++) {
-                for(j=0;j<nodes.length;j++) {
-                    if(resultadoAlgoritmo.path[i] == nodes[j].id) {
-                        nodes[j].color={background:'red'};
+                nodes.forEach(function(element) {
+                    element.color = {color:'black', background: '', highlight: 'black'};
+                });
+
+                var resultadoAlgoritmo = dijkstra(problem, nodoDeInicio, nodoDeLlegada);
+                console.log(resultadoAlgoritmo);
+
+                var tamanioResultado = resultadoAlgoritmo.path.length;
+                this.rutaMinima = resultadoAlgoritmo.distance; 
+
+                for(i=0; i<tamanioResultado; i++) {
+                    for(j=0;j<nodes.length;j++) {
+                        if(resultadoAlgoritmo.path[i] == nodes[j].id) {
+                            nodes[j].color={background:'red'};
+                        }
                     }
                 }
-            }
 
-            for(i=0; i<tamanioResultado-1; i++) {
-                for(j=0;j<edges.length;j++) {
-                    if(resultadoAlgoritmo.path[i] == edges[j].from && resultadoAlgoritmo.path[i+1] == edges[j].to) {
-                        edges[j].color = {color:'red',highlight:'red'};
+                for(i=0; i<tamanioResultado-1; i++) {
+                    for(j=0;j<edges.length;j++) {
+                        if(resultadoAlgoritmo.path[i] == edges[j].from && resultadoAlgoritmo.path[i+1] == edges[j].to) {
+                            edges[j].color = {color:'red',highlight:'red'};
+                        }
                     }
                 }
-            }
 
-            dibujarGrafo();
+                $('#label_ruta').addClass("show");
+                
+                dibujarGrafo();
+            }
+        },
+        nombre_nodo_inicio(id) {
+            var cadena;
+
+            for(i=0; i<nodes.length; i++) {
+
+                cadena = (nodes[i].label).split(":"); //Divide la cadena para solo imprimir el nombre en la vista
+
+                if(nodes[i].id == id) {
+                    this.nombreNodoInicio = cadena[1];
+                    
+                    break;
+                }
+            }   
+        },
+        nombre_nodo_fin(id) {
+            var cadena;
+
+            for(i=0; i<nodes.length; i++) {
+
+                cadena = (nodes[i].label).split(":"); //Divide la cadena para solo imprimir el nombre en la vista
+
+                if(nodes[i].id == id) {
+                    this.nombreNodoLlegada = cadena[1];
+                    
+                    break;
+                }
+            }   
         }
     },
     watch: {
@@ -349,4 +470,8 @@ var app = new Vue({
         }
     }
 })
+
+window.onload = function() {
+    llenarSelect();
+}
 </script>

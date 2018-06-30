@@ -34,21 +34,6 @@ class conexionesController extends AppBaseController
         $this->conexionesRepository->pushCriteria(new RequestCriteria($request));
         $conexiones = $this->conexionesRepository->all();
 
-        // select nombre_nodo from nodos as n
-        // join conexiones as c
-        // on c.id_from=n.id
-        // $nodos_desde = DB::table('nodos as n')
-        //     ->select('n.nombre_nodo as nombre')
-        //     ->join('conexiones as c', 'n.id', '=', 'c.id_from')
-        //     ->whereNull('c.deleted_at')
-        //     ->get();
-
-        // $nodos_hasta = DB::table('nodos as n')
-        //     ->select('n.nombre_nodo as nombre')
-        //     ->join('conexiones as c', 'n.id', '=', 'c.id_to')
-        //     ->whereNull('c.deleted_at')
-        //     ->get();
-
         return view('conexiones.index')
             ->with('conexiones', $conexiones);
             // ->with('nodos', ['from'=>$nodos_desde, 'to'=>$nodos_hasta]);
@@ -77,7 +62,7 @@ class conexionesController extends AppBaseController
 
         $conexiones = $this->conexionesRepository->create($input);
 
-        Flash::success('Conexiones saved successfully.');
+        Flash::success('La conexión se ha guardado correctamente.');
 
         return redirect(route('conexiones.index'));
     }
@@ -94,7 +79,7 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('Conexiones not found');
+            Flash::error('No se ha encontrado la conexión.');
 
             return redirect(route('conexiones.index'));
         }
@@ -114,7 +99,7 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('Conexiones not found');
+            Flash::error('No se ha encontrado la conexión.');
 
             return redirect(route('conexiones.index'));
         }
@@ -135,14 +120,14 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('Conexiones not found');
+            Flash::error('No se ha encontrado la conexión.');
 
             return redirect(route('conexiones.index'));
         }
 
         $conexiones = $this->conexionesRepository->update($request->all(), $id);
 
-        Flash::success('Conexiones updated successfully.');
+        Flash::success('La conexión se ha modificado correctamente.');
 
         return redirect(route('conexiones.index'));
     }
@@ -159,14 +144,14 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('Conexiones not found');
+            Flash::error('No se ha encontrado la conexión.');
 
             return redirect(route('conexiones.index'));
         }
 
         $this->conexionesRepository->delete($id);
 
-        Flash::success('Conexiones deleted successfully.');
+        Flash::success('La conexión se ha eliminado correctamente.');
 
         return redirect(route('conexiones.index'));
     }

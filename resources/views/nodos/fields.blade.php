@@ -10,6 +10,11 @@
     {!! Form::file('url_imagen', null, ['class' => 'form-control']) !!}
 </div>
 
+<div class="form-group col-sm-6">
+    {!! Form::label('id_proyecto', 'ID del proyecto:', ['class' => 'hide']) !!}
+    {!! Form::text('id_proyecto', null, ['class' => 'form-control hide', 'value' => '1']) !!}
+</div>
+
 <!-- El ID del proyecto se debe guardar automaticamente -->
 
 <!-- Submit Field -->

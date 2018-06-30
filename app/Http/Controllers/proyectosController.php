@@ -59,7 +59,7 @@ class proyectosController extends AppBaseController
 
         $proyectos = $this->proyectosRepository->create($input);
 
-        Flash::success('Proyectos saved successfully.');
+        Flash::success('El proyecto se ha guardado correctamente.');
 
         return redirect(route('proyectos.index'));
     }
@@ -76,7 +76,7 @@ class proyectosController extends AppBaseController
         $proyectos = $this->proyectosRepository->findWithoutFail($id);
 
         if (empty($proyectos)) {
-            Flash::error('Proyectos not found');
+            Flash::error('Proyecto no encontrado');
 
             return redirect(route('proyectos.index'));
         }
@@ -96,7 +96,7 @@ class proyectosController extends AppBaseController
         $proyectos = $this->proyectosRepository->findWithoutFail($id);
 
         if (empty($proyectos)) {
-            Flash::error('Proyectos not found');
+            Flash::error('Proyecto no encontrado');
 
             return redirect(route('proyectos.index'));
         }
@@ -117,14 +117,14 @@ class proyectosController extends AppBaseController
         $proyectos = $this->proyectosRepository->findWithoutFail($id);
 
         if (empty($proyectos)) {
-            Flash::error('Proyectos not found');
+            Flash::error('Proyecto no encontrado');
 
             return redirect(route('proyectos.index'));
         }
 
         $proyectos = $this->proyectosRepository->update($request->all(), $id);
 
-        Flash::success('Proyectos updated successfully.');
+        Flash::success('El proyecto se ha modificado correctamente.');
 
         return redirect(route('proyectos.index'));
     }
@@ -141,14 +141,14 @@ class proyectosController extends AppBaseController
         $proyectos = $this->proyectosRepository->findWithoutFail($id);
 
         if (empty($proyectos)) {
-            Flash::error('Proyectos not found');
+            Flash::error('Proyecto no encontrado');
 
             return redirect(route('proyectos.index'));
         }
 
         $this->proyectosRepository->delete($id);
 
-        Flash::success('Proyectos deleted successfully.');
+        Flash::success('El proyecto se ha eliminado correctamente.');
 
         return redirect(route('proyectos.index'));
     }
