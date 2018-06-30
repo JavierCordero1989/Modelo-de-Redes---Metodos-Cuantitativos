@@ -38,6 +38,7 @@ function arrayCeros(serieDeNodos) {
 
     return array;
 }
+
 //retorna la posicion en el arreglo de un nodo especifico
 function agregarRuta(origen, destino, distancia) {
     var n1 = posicionNodo(origen);
@@ -57,7 +58,7 @@ function posicionNodo(nodo) {
 }
 
 function estaTerminado(j) {
-    var tmp = new Nodo(nodos[j], 0, 0);
+    var tmp = new Nodo(nodos[j].from, 0, 0);
     return listos.contains(tmp);
 }
 
@@ -81,16 +82,32 @@ function encontrarRutaMinimaDijkstra(inicio, fin) {
     //crea una pila para almacenar la ruta desde el nodo final al origen 
     var pila = new Pila();
 
-    while(tmp != null) {
+    var variableControl = 0;
+
+    while(tmp != undefined) {
         pila.agregar(tmp);
         tmp = new Nodo(tmp.to, 0, 0);
+
+        if(variableControl >= 5000) {
+            console.log("Se detuvo el proceso, se llego a las 5000 iteraciones. while(87)");
+            break;
+        }
+        variableControl++;
     }
 
     var ruta = "";
 
+    variableControl = 0;
+
     //recorre la pila para armar la ruta en el orden correcto
     while(!pila.isEmpty()) {
         ruta += (pila.quitar().from + " ");
+
+        if(variableControl >= 5000) {
+            console.log("Se detuvo el proceso, se llego a las 5000 iteraciones. while(103)");
+            break;
+        }
+        variableControl++;
     }
 
     return distancia + ": " + ruta;
@@ -105,6 +122,8 @@ function encontrarRutaMinima(inicio) {
     cola.agregar(ni); //agrega el nodo inicial a la cola de prioridad
 
     console.log(cola.imprimirValores());
+
+    var variableControl = 0;
 
     while(!cola.isEmpty()) {
         var tmp = cola.quitar(); //saca el primer elemento
@@ -150,6 +169,12 @@ function encontrarRutaMinima(inicio) {
                 }
             }
         }
+
+        if(variableControl >= 5000) {
+            console.log("Se detuvo el proceso, se llego a las 5000 iteraciones. while(128)");
+            break;
+        }
+        variableControl++;
     }
 }
 
