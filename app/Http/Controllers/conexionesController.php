@@ -62,7 +62,9 @@ class conexionesController extends AppBaseController
 
         $conexiones = $this->conexionesRepository->create($input);
 
-        Flash::success('La conexión se ha guardado correctamente.');
+        // Flash::success('La conexión se ha guardado correctamente.');
+        Flash::success( config('global.mensajeGuardado') );
+        
 
         return redirect(route('conexiones.index'));
     }
@@ -79,7 +81,7 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('No se ha encontrado la conexión.');
+            Flash::error(config('global.mensajeNoEncontrado'));
 
             return redirect(route('conexiones.index'));
         }
@@ -99,7 +101,7 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('No se ha encontrado la conexión.');
+            Flash::error(config('global.mensajeNoEncontrado'));
 
             return redirect(route('conexiones.index'));
         }
@@ -120,14 +122,14 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('No se ha encontrado la conexión.');
+            Flash::error(config('global.mensajeNoEncontrado'));
 
             return redirect(route('conexiones.index'));
         }
 
         $conexiones = $this->conexionesRepository->update($request->all(), $id);
 
-        Flash::success('La conexión se ha modificado correctamente.');
+        Flash::success(config('global.mensajeActualizado'));
 
         return redirect(route('conexiones.index'));
     }
@@ -144,14 +146,14 @@ class conexionesController extends AppBaseController
         $conexiones = $this->conexionesRepository->findWithoutFail($id);
 
         if (empty($conexiones)) {
-            Flash::error('No se ha encontrado la conexión.');
+            Flash::error(config('global.mensajeNoEncontrado'));
 
             return redirect(route('conexiones.index'));
         }
 
         $this->conexionesRepository->delete($id);
 
-        Flash::success('La conexión se ha eliminado correctamente.');
+        Flash::success(config('global.mensajeEliminado'));
 
         return redirect(route('conexiones.index'));
     }

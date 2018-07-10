@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Alliance Systems</title>
+    {{-- <title>Alliance Systems</title> --}}
+    <title>{{ config('global.tituloPagina') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
  
 

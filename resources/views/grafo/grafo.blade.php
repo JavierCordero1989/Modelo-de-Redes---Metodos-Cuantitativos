@@ -1,18 +1,117 @@
-<script>
-    // color: {color:'red', highlight:'red'} //Para cambiarle el color a la arista
-    // edges[0].color = {color:'blue', highlight:'blue'} //Se le cambia el color a la arista
-    
+<script>    
     var nodos_json = <?php echo $nodos; ?>;
     var conexiones_json = <?php echo $conexionesNodos; ?>;
     var conexionesNuevas_json = <?php echo $conexionesNuevas_json?>;
-    // Se obtienen los datos desde el controlador y se almacenan en variables de javascript
-    // var ids_nodos = <?php //echo json_encode($ids_nodos); ?>; //ID's obtenidos de la BD
-    // var nombres_nodos = <?php //echo json_encode($nombres); ?>; //Nombres de los nodos obtenidos e la BD
+</script>
+<script>
+    function toJSON(obj) {
+        return JSON.stringify(obj, null, 4);
+    }
 
-    //Relaciones desde y hasta de los nodos para realizar las conexiones
-    // var _from = <?php //echo json_encode($conexiones['ids_from']); ?>;
-    // var _to = <?php //echo json_encode($conexiones['ids_to']); ?>;
+    function addNode() {
+        try {
+            nodes.add({
+                id: document.getElementById('node-id').value,
+                label: document.getElementById('node-label').value
+            });
+        }
+        catch(err) {
+            alert(err);
+        }
+    }
 
+    function updateNode() {
+        try{
+            nodes.update({
+                id: document.getElementById('node-id').value,
+                label: document.getElementById('node-label').value
+            });
+        }
+        catch(err) {
+            alert(err);
+        }
+    }
+
+    function removeNode() {
+        try {
+            nodes.remove({id:document.getElementById('node-id').value});
+        } 
+        catch (err) {
+            alert(err);
+        }
+    }
+
+    function addEdge() {
+        try {
+            edges.add({
+                id: document.getElementById('edge-id').value,
+                from: document.getElementById('edge-from').value,
+                to: document.getElementById('edge-to').value
+            });
+        } 
+        catch (err) {
+            alert(err);
+        }
+    }
+
+    function updateEdge() {
+        try {
+            edges.update({
+                id: document.getElementById('edge-id').value,
+                from: document.getElementById('edge-from').value,
+                to: document.getElementById('edge-to').value
+            });
+        } 
+        catch (err) {
+            alert(err);
+        }
+    }
+
+    function removeEdge() {
+        try {
+            edges.remove(id: document.getElementById('edge-id').value);
+        } 
+        catch (err) {
+            alert(err);
+        }
+    }
+
+    function draw() {
+        //create an array with nodes
+        nodes = new vis.DataSet();
+        nodes.on('*', function(){
+            document.getElementById('nodes').innerHTML = JSON.stringify(nodes.get(),null,4);
+        });
+
+        node.add([
+            {id:'1', label:'Node 1'},
+            {id:'2', label:'Node 2'},
+            {id:'3', label:'Node 3'},
+            {id:'4', label:'Node 4'},
+            {id:'5', label:'Node 5'}
+        ]);
+
+        //create an array with edges
+        edges = new vis.DataSet();
+        edges.on('*', function() {
+            document.getElementById('edges').innerHTML = JSON.stringify(edges.get(), null, 4);
+        });
+        edges.add([
+            {id:'1', from: '1', to: '2'}
+            {id:'2', from: '1', to: '3'}
+            {id:'3', from: '2', to: '4'}
+            {id:'4', from: '2', to: '5'}
+        ]);
+
+        //create a network
+        var container = document.getElementById('network');
+        var data = {
+            nodes:nodes,
+            edges: edges
+        };
+        var options = {};
+        network = new vis.Network(container, data, options);
+    }
 </script>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/vis.min.js') }}"></script>
