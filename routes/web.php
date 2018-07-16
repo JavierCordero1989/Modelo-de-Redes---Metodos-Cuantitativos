@@ -27,6 +27,7 @@ Route::resource('conexiones', 'conexionesController');
 
 Route::get('/grafo', 'grafoController@index');
 Route::get('/guardar', 'grafoController@save');
+Route::get('/grafo-nuevo', 'grafoController@indexNuevo');
 
 Route::post('nodo_nuevo',function(Request $request){   
   $nodo = App\Producto\nodos::create($request->input());

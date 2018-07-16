@@ -1,9 +1,9 @@
 <script>    
     var nodos_json = <?php echo $nodos; ?>;
     var conexiones_json = <?php echo $conexionesNodos; ?>;
-    var conexionesNuevas_json = <?php echo $conexionesNuevas_json?>;
+    var conexionesNuevas_json = <?php echo $conexionesNuevas_json; ?>;
 </script>
-<script>
+{{--<script>
     function toJSON(obj) {
         return JSON.stringify(obj, null, 4);
     }
@@ -69,7 +69,7 @@
 
     function removeEdge() {
         try {
-            edges.remove(id: document.getElementById('edge-id').value);
+            edges.remove({id: document.getElementById('edge-id').value});
         } 
         catch (err) {
             alert(err);
@@ -97,9 +97,9 @@
             document.getElementById('edges').innerHTML = JSON.stringify(edges.get(), null, 4);
         });
         edges.add([
-            {id:'1', from: '1', to: '2'}
-            {id:'2', from: '1', to: '3'}
-            {id:'3', from: '2', to: '4'}
+            {id:'1', from: '1', to: '2'},
+            {id:'2', from: '1', to: '3'},
+            {id:'3', from: '2', to: '4'},
             {id:'4', from: '2', to: '5'}
         ]);
 
@@ -112,7 +112,8 @@
         var options = {};
         network = new vis.Network(container, data, options);
     }
-</script>
+</script>--}}
+
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/vis.min.js') }}"></script>
 <script src="{{ asset('js/vue.js') }}"></script>

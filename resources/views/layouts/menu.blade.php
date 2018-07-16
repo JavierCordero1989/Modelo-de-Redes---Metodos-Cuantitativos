@@ -18,3 +18,6 @@
     <a href="{!! route('proyectos.index') !!}"><i class="fa fa-edit"></i><span>Proyectos</span></a>
 </li>
 
+<li class="">
+    <a href="/grafo-nuevo"><i class="fa fa-edit"></i><span>Grafo Nuevo</span></a>
+</li>

@@ -9,8 +9,8 @@ use DB;
 
 class grafoController extends Controller
 {
-    // {id:id, shape:forma, image:imagen, label:etiqueta} => NODOS
-    // {from:origen, to:destino, label:etiqueta} => ARISTAS
+    // {id:id, shape:forma, image:imagen, label:etiqueta, title:titulo_de_pop} => NODOS
+    // {id:id, from:origen, to:destino, label:etiqueta} => ARISTAS
 
     //
     public function index() {
@@ -89,5 +89,15 @@ class grafoController extends Controller
         Flash::success('Nodos saved successfully.');
 
         return redirect(route('grafo.grafo'));
+    }
+
+    public function indexNuevo() {
+        $nodes = nodos::select('id', 'nombre_nodo as label', 'id as title')->get();
+        $edges = conexiones::select('id', 'id_from as from', 'id_to as to', DB::raw('CAST(peso_arista as CHAR) as label'))->get();
+        // dd(json_encode($nodes), json_encode($edges));
+
+        return view('grafo.grafo_nuevo')
+        ->with('nodes', $nodes)
+        ->with('edges', $edges);
     }
 }
